@@ -1,8 +1,20 @@
+const figlet = require('figlet');
 const prompt = require('prompt-sync') ();
 const fs = require('fs');
 
+console.log(
+    figlet.textSync("ThemeGen", {
+        font: 'Standard',
+        horizontalLayout: 'default',
+        verticalLayout: 'default',
+        width: 80,
+        whitespaceBreak: true,
+    })
+);
+
 let themeTags = '';
 let themeVersion = '0.0.1';
+
 
 const themeName = prompt("What's the name of your theme? ");
 console.log("That's an awesome name. Good thinking!");

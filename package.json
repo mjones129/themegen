@@ -9,6 +9,7 @@
   "author": "Matt Jones",
   "license": "ISC",
   "dependencies": {
+    "figlet": "^1.6.0",
     "fs": "^0.0.1-security",
     "prompt-sync": "^4.2.0"
   }
