@@ -27,16 +27,16 @@ console.log("Very nice!");
 const themeTagCheck = prompt("Would you like to add any tags to your theme? (y/n) ");
 
 if (themeTagCheck == "y") {
-    let themeTags = prompt('Please enter your theme tags: ');
+    themeTags = prompt('Please enter your theme tags: ');
 }
 
 
 const versionCheck = prompt("I assume this is version 0.0.1? (y/n) ");
 
 if (versionCheck == "y") {
-    let themeVersion = "0.0.1";
+    themeVersion = "0.0.1";
 } if (versionCheck == "n") {
-    let themeVersion = prompt("Please enter version number: ");
+    themeVersion = prompt("Please enter version number: ");
 }
 
 //remove spaces from theme name to create text domain
