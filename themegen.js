@@ -1,6 +1,6 @@
 const figlet = require('figlet');
 const prompt = require('prompt-sync') ();
-const fs = require('fs');
+const fs = require('fs-extra');
 
 console.log(
     figlet.textSync("ThemeGen", {
@@ -11,11 +11,35 @@ console.log(
         whitespaceBreak: true,
     })
 );
-
+//set some defaults
 let themeTags = '';
 let themeVersion = '0.0.1';
+const options = {
+    encoding: 'utf8',
+    mode: 0o755,
+    flag: ''
+};
+const blocksIndex = './templates/index.html';
+const blocksIndexData = '';
+const classicIndex = './index.php';
+const classicIndexData = '';
 
-
+console.log("Welcome to ThemGen!");
+const themeType = prompt("Is this a Blocks theme or a Classic theme? (b/c): ");
+if (themeType == 'b') {
+    //fs-extra create a new folder called templates
+    fs.outputFile(blocksIndex, blocksIndexData, options, (err) => {
+        if (err) throw err;
+        console.log('Blocks template files successfully generated.');
+    })
+    //fs-extra write a new file
+} if (themeType == 'c') {
+    //fs-extra write a new file called index.php in the root directory
+    fs.outputFile(classicIndex, classicIndexData, options, (err) => {
+        if (err) throw err;
+        console.log('Classic template files generated.');
+    });
+}
 const themeName = prompt("What's the name of your theme? ");
 console.log("That's an awesome name. Good thinking!");
 const authorName = prompt("What's the author's name? ");
