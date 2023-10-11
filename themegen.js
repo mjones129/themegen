@@ -1,16 +1,8 @@
+//require the essentials
 const figlet = require('figlet');
 const prompt = require('prompt-sync') ();
 const fs = require('fs-extra');
 
-console.log(
-    figlet.textSync("ThemeGen", {
-        font: 'Standard',
-        horizontalLayout: 'default',
-        verticalLayout: 'default',
-        width: 80,
-        whitespaceBreak: true,
-    })
-);
 //set some defaults
 let themeTags = '';
 let themeVersion = '0.0.1';
@@ -23,6 +15,17 @@ const blocksIndex = './templates/index.html';
 const blocksIndexData = '';
 const classicIndex = './index.php';
 const classicIndexData = '';
+
+//begin program
+console.log(
+    figlet.textSync("ThemeGen", {
+        font: 'Cybermedium',
+        horizontalLayout: 'default',
+        verticalLayout: 'default',
+        width: 80,
+        whitespaceBreak: true,
+    })
+);
 
 console.log("Welcome to ThemGen!");
 const themeType = prompt("Is this a Blocks theme or a Classic theme? (b/c): ");
