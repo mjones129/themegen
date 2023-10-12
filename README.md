@@ -2,6 +2,8 @@
 
 ThemeGen is a bare-bones WordPress theme generator that happens entirely in the terminal. Simply answer a few questions and generate basic theme files instantly.
 
+!['Screenshot'](./lib/screenshot.png)
+
 ## Requirements:
 * WordPress version 6.3.1 or higher
 * PHP version 8.2 or higher
