@@ -16,6 +16,7 @@ const blocksIndexData = '';
 const classicIndex = './index.php';
 const classicIndexData = '';
 
+
 //begin program
 console.log(
     figlet.textSync("ThemeGen", {
@@ -30,12 +31,15 @@ console.log(
 console.log("Welcome to ThemGen!");
 const themeType = prompt("Is this a Blocks theme or a Classic theme? (b/c): ");
 if (themeType == 'b') {
-    //fs-extra create a new folder called templates
-    fs.outputFile(blocksIndex, blocksIndexData, options, (err) => {
-        if (err) throw err;
-        console.log('Blocks template files successfully generated.');
-    })
-    //fs-extra write a new file
+    //fs-extra write a new index file in the templates directory
+    // fs.outputFile(blocksIndex, blocksIndexData, options, (err) => {
+    //     if (err) throw err;
+    //     console.log('Blocks template files successfully generated.');
+    // });
+
+    //fs-extra copy blocks template files from lib
+    fs.copySync('./lib/index.html', './templates/index.html');
+    fs.copySync('./lib/screenshot.png', './screenshot.png');
 } if (themeType == 'c') {
     //fs-extra write a new file called index.php in the root directory
     fs.outputFile(classicIndex, classicIndexData, options, (err) => {
