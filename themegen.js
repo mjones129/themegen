@@ -31,22 +31,11 @@ console.log(
 console.log("Welcome to ThemGen!");
 const themeType = prompt("Is this a Blocks theme or a Classic theme? (b/c): ");
 if (themeType == 'b') {
-    //fs-extra write a new index file in the templates directory
-    // fs.outputFile(blocksIndex, blocksIndexData, options, (err) => {
-    //     if (err) throw err;
-    //     console.log('Blocks template files successfully generated.');
-    // });
-
-    //fs-extra copy blocks template files from lib
     fs.copySync('./lib/index.html', './templates/index.html');
-    fs.copySync('./lib/screenshot.png', './screenshot.png');
 } if (themeType == 'c') {
-    //fs-extra write a new file called index.php in the root directory
-    fs.outputFile(classicIndex, classicIndexData, options, (err) => {
-        if (err) throw err;
-        console.log('Classic template files generated.');
-    });
-}
+    fs.copySync('./lib/index.php', './index.php');
+    }
+fs.copySync('./lib/screenshot.png', './screenshot.png');
 const themeName = prompt("What's the name of your theme? ");
 console.log("That's an awesome name. Good thinking!");
 const authorName = prompt("What's the author's name? ");
