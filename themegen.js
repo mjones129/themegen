@@ -64,7 +64,17 @@ const textDomainCondensed = themeName.split(" ").join("");
 //set the text domain to all lowercase
 const textDomain = textDomainCondensed.toLowerCase();
 
-console.log(`Congrats, ${authorName}! Your theme has been generated!`);
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function delayedMessage() {
+    console.log(`Congrats, ${authorName}! Your theme has been generated!`);
+    await sleep(1000);
+    console.log('To clean up your install, run "npm run cleanup"');
+}
+
+delayedMessage();
 
 let stylesheetData =   `/*
 Theme Name: ${themeName}

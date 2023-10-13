@@ -4,7 +4,7 @@
   "description": "Minimalistic WordPress theme generator",
   "main": "themegen.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cleanup": "npm uninstall figlet fs-extra prompt-sync"
   },
   "author": "Matt Jones",
   "license": "ISC",
