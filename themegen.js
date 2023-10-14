@@ -1,7 +1,7 @@
 //require the essentials
 const figlet = require('figlet');
 const prompt = require('prompt-sync') ();
-const fs = require('fs-extra');
+const fs = require('fs');
 const https = require('https');
 
 //set some defaults

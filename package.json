@@ -1,17 +1,17 @@
 {
   "name": "themegen",
   "version": "1.0.0",
+  "type": "module",
   "description": "Minimalistic WordPress theme generator",
   "main": "themegen.js",
   "scripts": {
-    "cleanup": "npm uninstall figlet fs-extra prompt-sync"
+    "cleanup": "npm uninstall figlet fs-extra prompt-sync axios"
   },
   "author": "Matt Jones",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.5.1",
     "figlet": "^1.6.0",
-    "fs-extra": "^11.1.1",
     "prompt-sync": "^4.2.0"
   }
 }
