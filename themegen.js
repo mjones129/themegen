@@ -2,6 +2,7 @@
 const figlet = require('figlet');
 const prompt = require('prompt-sync') ();
 const fs = require('fs-extra');
+const https = require('https');
 
 //set some defaults
 let themeTags = '';
@@ -63,6 +64,27 @@ if (versionCheck == "y") {
 const textDomainCondensed = themeName.split(" ").join("");
 //set the text domain to all lowercase
 const textDomain = textDomainCondensed.toLowerCase();
+
+//download some plugins
+function getWoo() {
+    https.get('https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug=woocommerce', res => {
+        let data = [];
+        res.on('data', chunk => {
+            data.push(chunk);
+        });
+
+        res.on('end', () => {
+            console.log("Response ended: ");
+            const woo = JSON.parse(Buffer.concat(data));
+            console.log(woo);
+        })
+
+    }).on('error', err => {
+        console.log("Error: ", err.message);
+    });
+}
+
+getWoo();
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
