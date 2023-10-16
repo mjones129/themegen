@@ -1,6 +1,6 @@
 import axios from 'axios';
 import fs from 'fs';
-import AdmZip from 'adm-zip';
+import unzipper from 'unzipper';
 
 //this doesn't work because I need to wait on two things:
 //1 the fileURL is just the API that returns JSON
@@ -55,18 +55,13 @@ async function getFile(link) {
 }
 
 async function decompressFile(file) {
-  if (!fs.existsSync(`../plugins/${slug}`)) {
-    fs.mkdirSync(`../plugins/${slug}`, {recursive: true});
-    console.log("created plugin directory.");
-  }
   await file;
-  if (file) {
-    let zip = new AdmZip(file)
-    let zipEntries = zip.getEntries();
-      zip.extractAllToAsync(outputDirectory, true, error ? console.log(error) : console.log('Done'));
-  }
-  
+  fs.createReadStream(file)
+  .pipe(unzipper.Extract({ path: outputDirectory }));
+
 }
+  
+
   
 
 async function downloadPlugin(slug) {
