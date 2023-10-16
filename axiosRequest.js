@@ -9,7 +9,7 @@ import unzipper from 'unzipper';
 //4 Only after you have a valid download_link key do you pass it through the axios function below, piping that response into a datastream and outputting the file.
 
 let link = '';
-let slug = 'wordpress-seo';
+let slug = 'akismet';
 let file = '';
 let outputDirectory = '../../plugins/';
 // async function downloadPlugin(slug) {
@@ -57,13 +57,16 @@ async function getFile(link) {
 async function decompressFile(file) {
   await file;
   fs.createReadStream(file)
-  .pipe(unzipper.Extract({ path: outputDirectory }));
-
+  .pipe(unzipper.Extract({ path: outputDirectory })).on('finish', (err) => {
+    if (err) throw err;
+    console.log('extraction complete');
+    fs.unlinkSync(file, (err) => {
+      if (err) throw err;
+    });
+    console.log("cleanup successful");
+  });
 }
   
-
-  
-
 async function downloadPlugin(slug) {
   await getDownloadLink(slug);
   await getFile(link);
