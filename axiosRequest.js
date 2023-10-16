@@ -2,44 +2,29 @@ import axios from 'axios';
 import fs from 'fs';
 import unzipper from 'unzipper';
 
-//this doesn't work because I need to wait on two things:
-//1 the fileURL is just the API that returns JSON
-//2 you need to wait on that API call and JSON to come back and load that into a variable
-//3 Only after that variable contains JSON data do you access the download_link key
-//4 Only after you have a valid download_link key do you pass it through the axios function below, piping that response into a datastream and outputting the file.
-
+//define some global variables
 let link = '';
 let slug = 'akismet';
 let file = '';
 let outputDirectory = '../../plugins/';
-// async function downloadPlugin(slug) {
-//   //get the JSON
-//   const APIcall = `https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug=${slug}`;
-//   await axios.get(APIcall)
-//     .then (function (response) {
-//     // response.data.pipe(fs.createWriteStream(outputLocationPath));
-//     const sourceURL = response.data.download_link;
-//     return sourceURL;
-//     })
-//     .then (function () {
-//       sourceURL.pipe(fs.createWriteStream(outputLocationPath));
-//     })
-// }
 
+//request the download link for the latest version of the wordpress plugin, based on the slug
 async function getDownloadLink(slug) {
   
   await axios.get(`https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug=${slug}`)
   .then(function (response) {
+    //save the server response to a global variable nd return it
     link = response.data.download_link;
     console.log(`Download link: ${link}`)
     return link;
   })
-  .catch(function (error) {
+  .catch(function (error) { //catch any errors
     console.log(error);
   })
 
 }
 
+//make a get request to whatever download link line 14 returns
 async function getFile(link) {
   await axios({
     method: 'get',
@@ -47,6 +32,7 @@ async function getFile(link) {
     responseType: 'stream'
   })
   .then(function(response) {
+    //capture the server response into a data stream and pipe it into a new file in the plugins directory
     response.data.pipe(fs.createWriteStream(`../../plugins/${slug}.zip`))
     file = `../../plugins/${slug}.zip`
     console.log('New file has been returned');
@@ -54,19 +40,25 @@ async function getFile(link) {
   })
 }
 
+//unzip the file into the directory that Wordpress is expecting
 async function decompressFile(file) {
+  //await the file, because you can't extract the file if it isn't finished downloading yet
   await file;
+  //once the file is finished downloading, extract it to the plugins director
   fs.createReadStream(file)
   .pipe(unzipper.Extract({ path: outputDirectory })).on('finish', (err) => {
     if (err) throw err;
     console.log('extraction complete');
+    //after the file has been successfully unzipped with no errors, deleted the original .zip
     fs.unlinkSync(file, (err) => {
       if (err) throw err;
     });
     console.log("cleanup successful");
   });
 }
-  
+ 
+
+//combine all that into a single function
 async function downloadPlugin(slug) {
   await getDownloadLink(slug);
   await getFile(link);
@@ -74,8 +66,4 @@ async function downloadPlugin(slug) {
 }
 
 
-
-
 downloadPlugin(slug);
-//get the link
-// GET request for remote image in node.js
