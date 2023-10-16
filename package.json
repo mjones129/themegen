@@ -10,8 +10,10 @@
   "author": "Matt Jones",
   "license": "ISC",
   "dependencies": {
+    "adm-zip": "^0.5.10",
     "axios": "^1.5.1",
     "figlet": "^1.6.0",
-    "prompt-sync": "^4.2.0"
+    "prompt-sync": "^4.2.0",
+    "unzipper": "^0.10.14"
   }
 }

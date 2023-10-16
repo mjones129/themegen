@@ -1,5 +1,6 @@
 import axios from 'axios';
 import fs from 'fs';
+import AdmZip from 'adm-zip';
 
 //this doesn't work because I need to wait on two things:
 //1 the fileURL is just the API that returns JSON
@@ -8,7 +9,9 @@ import fs from 'fs';
 //4 Only after you have a valid download_link key do you pass it through the axios function below, piping that response into a datastream and outputting the file.
 
 let link = '';
-
+let slug = 'wordpress-seo';
+let file = '';
+let outputDirectory = '../../plugins/';
 // async function downloadPlugin(slug) {
 //   //get the JSON
 //   const APIcall = `https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug=${slug}`;
@@ -28,6 +31,7 @@ async function getDownloadLink(slug) {
   await axios.get(`https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug=${slug}`)
   .then(function (response) {
     link = response.data.download_link;
+    console.log(`Download link: ${link}`)
     return link;
   })
   .catch(function (error) {
@@ -37,30 +41,43 @@ async function getDownloadLink(slug) {
 }
 
 async function getFile(link) {
-  await axios.get({
+  await axios({
+    method: 'get',
     url: link,
-    responseType: 'document',
-    onDownloadProgress: function(progressEvent) {
-      console.log(progressEvent)}
-    })
-  .then(function (response) {
-    response.data.pipe(fs.createWriteStream('../pluginDirectory/plugin.zip'))
+    responseType: 'stream'
   })
-  .catch(function (error) {
-    console.log(error);
+  .then(function(response) {
+    response.data.pipe(fs.createWriteStream(`../../plugins/${slug}.zip`))
+    file = `../../plugins/${slug}.zip`
+    console.log('New file has been returned');
+    return file;
   })
 }
 
-
+async function decompressFile(file) {
+  if (!fs.existsSync(`../plugins/${slug}`)) {
+    fs.mkdirSync(`../plugins/${slug}`, {recursive: true});
+    console.log("created plugin directory.");
+  }
+  await file;
+  if (file) {
+    let zip = new AdmZip(file)
+    let zipEntries = zip.getEntries();
+      zip.extractAllToAsync(outputDirectory, true, error ? console.log(error) : console.log('Done'));
+  }
+  
+}
+  
 
 async function downloadPlugin(slug) {
   await getDownloadLink(slug);
   await getFile(link);
+  await decompressFile(file);
 }
 
 
 
 
-downloadPlugin('woocommerce');
+downloadPlugin(slug);
 //get the link
 // GET request for remote image in node.js
