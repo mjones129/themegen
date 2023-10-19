@@ -1,8 +1,19 @@
 //require the essentials
-const figlet = require('figlet');
-const prompt = require('prompt-sync') ();
-const fs = require('fs');
-const https = require('https');
+// import { downloadPlugin } from './axiosRequest.mjs';
+import figlet from 'figlet';
+import {promises as fs} from 'fs';
+// import https from 'https';
+// import prompt from 'prompt-sync';
+import promptSync from 'prompt-sync'; const prompt = promptSync();
+// const https = require('https');
+// import { downloadPlugin } from './axiosRequest';
+// import { downloadPlugin } from './axiosRequest';
+// const fs = require('fs/promises');
+// const prompt = require('prompt-sync') ();
+// const figlet = require('figlet');
+// const axiosRequest = require('./axiosRequest');
+// const downloadPlugin = require('./axiosRequest');
+
 
 //set some defaults
 let themeTags = '';
@@ -16,6 +27,11 @@ const blocksIndex = './templates/index.html';
 const blocksIndexData = '';
 const classicIndex = './index.php';
 const classicIndexData = '';
+let slug = '';
+// let slug = axiosRequest.slug;
+
+
+
 
 
 //begin program
@@ -32,16 +48,19 @@ console.log(
 console.log("Welcome to ThemGen!");
 const themeType = prompt("Is this a Blocks theme or a Classic theme? (b/c): ");
 if (themeType == 'b') {
-    fs.copySync('./lib/index.html', './templates/index.html');
-} if (themeType == 'c') {
-    fs.copySync('./lib/index.php', './index.php');
+    fs.mkdir('./templates/');
+    if(fs.readdir('./templates/') == []){
+        fs.copyFile('./lib/index.html', './templates/index.html');
     }
-fs.copySync('./lib/screenshot.png', './screenshot.png');
+} if (themeType == 'c') {
+    fs.copyFile('./lib/index.php', './index.php');
+    }
+fs.copyFile('./lib/screenshot.png', './screenshot.png');
 const themeName = prompt("What's the name of your theme? ");
 console.log("That's an awesome name. Good thinking!");
 const authorName = prompt("What's the author's name? ");
 console.log(`Nice to meet you, ${authorName}!`);
-const authorURI = prompt(`Do you have a website, ${authorName}? `);
+const authorURI = prompt(`Have a website, ${authorName}? Please enter the URL: `);
 console.log("Awesome, I'll be sure to include that.");
 const themeDesc = prompt("How would you describe this theme? ");
 console.log("Very nice!");
@@ -60,44 +79,18 @@ if (versionCheck == "y") {
     themeVersion = prompt("Please enter version number: ");
 }
 
+const ecomm = prompt("Install WooCommerce? (y/n) ");
+if (ecomm === 'y') {
+    slug = 'woocommerce';
+    console.log(`The slug has been updated to ${slug}`);
+}
+
 //remove spaces from theme name to create text domain
 const textDomainCondensed = themeName.split(" ").join("");
 //set the text domain to all lowercase
 const textDomain = textDomainCondensed.toLowerCase();
 
-//download some plugins
-function getWoo() {
-    https.get('https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug=woocommerce', res => {
-        let data = [];
-        res.on('data', chunk => {
-            data.push(chunk);
-        });
-
-        res.on('end', () => {
-            console.log("Response ended: ");
-            const woo = JSON.parse(Buffer.concat(data));
-            console.log(woo);
-        })
-
-    }).on('error', err => {
-        console.log("Error: ", err.message);
-    });
-}
-
-getWoo();
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function delayedMessage() {
-    console.log(`Congrats, ${authorName}! Your theme has been generated!`);
-    await sleep(1000);
-    console.log('To clean up your install, run "npm run cleanup"');
-}
-
-delayedMessage();
-
+//now that we have all the answers, we can populate the main style.css
 let stylesheetData =   `/*
 Theme Name: ${themeName}
 Theme URI: https://wordpress.org/themes/twentytwenty/
@@ -117,6 +110,10 @@ Use it to make something cool, have fun, and share what you've learned with othe
 */`
 
 
-fs.writeFile('style.css', stylesheetData, (err) => {
+await fs.writeFile('style.css', stylesheetData, (err) => {
     if(err) throw err;
+    console.log(`Stylesheet generated!`);
 });
+
+
+export default slug;
