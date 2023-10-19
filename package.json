@@ -5,7 +5,8 @@
   "description": "Minimalistic WordPress theme generator",
   "main": "themegen.js",
   "scripts": {
-    "cleanup": "npm uninstall figlet fs-extra prompt-sync axios"
+    "cleanup": "npm uninstall figlet fs-extra prompt-sync axios",
+    "themegen": "node axiosRequest.js"
   },
   "author": "Matt Jones",
   "license": "ISC",
