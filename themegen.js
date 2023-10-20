@@ -8,11 +8,6 @@ import promptSync from 'prompt-sync'; const prompt = promptSync();
 // const https = require('https');
 // import { downloadPlugin } from './axiosRequest';
 // import { downloadPlugin } from './axiosRequest';
-// const fs = require('fs/promises');
-// const prompt = require('prompt-sync') ();
-// const figlet = require('figlet');
-// const axiosRequest = require('./axiosRequest');
-// const downloadPlugin = require('./axiosRequest');
 
 
 //set some defaults

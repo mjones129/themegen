@@ -33,7 +33,7 @@ async function getFile() {
     url: `${link}`,
     responseType: 'stream',
     onDownloadProgress: function (progressEvent) {
-      console.log(`Downlod progress ${(progressEvent.progress*100).toFixed(2)}%`);
+      console.log(`Download progress ${(progressEvent.progress*100).toFixed(2)}%`);
     }
   })
   .then(function(response) {
@@ -46,7 +46,7 @@ async function getFile() {
       decompressFile(file);
     })
   })
-  return;
+  return file;
 }
   
 
@@ -75,6 +75,7 @@ async function decompressFile(file) {
     console.log('Cleanup successful.');
     console.log('Build complete. Thanks for using Themegen!');
   })
+  return;
 }
  
 
