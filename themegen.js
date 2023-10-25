@@ -73,8 +73,102 @@ if (versionCheck == "y") {
     themeVersion = prompt("Please enter version number: ");
 }
 
-const ecomm = prompt("Install WooCommerce? (y/n) ");
-const wtf = prompt("Install What The File? (y/n) ");
+const allOrNothing = prompt("Plugin time! Install the usual suspects, or cherry pick what you want? (u/c) ");
+
+if (allOrNothing === 'c') {
+    const ecomm = prompt("Install WooCommerce? (y/n) ");
+    const wtf = prompt("Install What The File? (y/n) ");
+    const bsr = prompt("Install Better Search Replace? (y/n) ");
+    const emr = prompt("Install Enable Media Replace? (y/n) ");
+    const eio = prompt("Install EWWW Image Optimizer? (y/n) ");
+    const mwpw = prompt("Install ManageWP Worker? (y/n) ");
+    const redir = prompt("Install Redirection? (y/n) ");
+    const ssl = prompt("Install Really Simple SSL? (y/n) ");
+    const wf = prompt("Install Wordfence Security? (y/n) ");
+    const wpfc = prompt("Install WP Fastest Cache? (y/n) ");
+    const hidelogin = prompt("Install WPS Hide Login? (y/n) ");
+    const yoast = prompt("Install Yoast SEO? (y/n) ");
+    const ydp = prompt("Install Yoast Duplicate Post? (y/n) ");
+
+    if (ecomm === 'y') {
+        slugs.push('woocommerce');
+    } else {
+        console.log('WooCommerce not downloaded.');
+    }
+    
+    if (wtf === 'y') {
+        slugs.push('what-the-file');
+    } else {
+        console.log('What the file not downloaded');
+    }
+    
+    if (bsr === 'y') {
+        slugs.push('better-search-replace');
+    } else {
+        console.log('Better Search Replace not downloaded.');
+    }
+    
+    if (eio === 'y') {
+        slugs.push('ewww-image-optimizer');
+    } else {
+        console.log('EWWW Image Optimizer not downloaded.');
+    }
+    
+    if (mwpw === 'y') {
+        slugs.push('worker');
+    } else {
+        console.log('ManageWP Worker not downloaded.');
+    }
+    
+    if (wf === 'y') {
+        slugs.push('wordfence');
+    } else {
+        console.log('Wordfence Security not downloaded.');
+    }
+    
+    if (wpfc === 'y') {
+        slugs.push('wp-fastest-cache');
+    } else {
+        console.log('WP Fastest Cace not downloaded.');
+    }
+    if (hidelogin === 'y') {
+        slugs.push('wps-hide-login');
+    } else {
+        console.log("WPS Hide Login not downloaded.");
+    }
+    if (yoast === 'y') {
+        slugs.push('wordpress-seo');
+    } else {
+        console.log("Yoast SEO not downloaded.");
+    }
+    if (ssl === 'y') {
+        slugs.push('really-simple-ssl');
+    } else {
+        console.log('Really Simple SSL not downloaded.');
+    }
+    
+    if (emr === 'y') {
+        slugs.push('enable-media-replace');
+    } else {
+        console.log("Enalbe Media Replace not downloaded.");
+    }
+
+    if (redir === 'y') {
+        slugs.push('redirection');
+    } else {
+        console.log('Redirection not downloaded.');
+    }
+
+    if (ydp === 'y') {
+        slugs.push('duplicate-post');
+    } else {
+        console.log('Yoast Duplicate Post not downloaded.');
+    }
+}
+
+if (allOrNothing === 'u') {
+    slugs.push('what-the-file', 'better-search-replace', 'ewww-image-optimizer', 'enable-media-replace', 'really-simple-ssl', 'wordfence', 'wp-fastest-cache', 'wps-hide-login', 'wordpress-seo');
+}
 
 
 //remove spaces from theme name to create text domain
@@ -107,17 +201,11 @@ await fs.writeFile('style.css', stylesheetData, (err) => {
     console.log(`Stylesheet generated!`);
 });
 
-if (ecomm === 'y') {
-    slugs.push('woocommerce');
-}
-if (ecomm === 'n') {
-    console.log('WooCommerce not downloaded.');
-}
-if (wtf === 'y') {
-    slugs.push('what-the-file');
-}
 
-for (let i = 0; slugs[i]; i++) {
-    await downloadPlugin(slugs[i]);
+
+if (slugs) {
+    for (let i = 0; slugs[i]; i++) {
+        await downloadPlugin(slugs[i]);
+    }
 }
 // export default slug;
