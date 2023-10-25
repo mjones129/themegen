@@ -10,10 +10,11 @@ import path from 'path';
 let link = '';
 let file = '';
 let outputDirectory = path.resolve('../../plugins/');
+let finished = true;
 
 //request the download link for the latest version of the wordpress plugin, based on the slug
 async function downloadPlugin(slug) {
-  
+  finished = false;
   await axios.get(`https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug=${slug}`)
   .then(function (response) {
     //save the server response to a global variable nd return it
@@ -35,7 +36,7 @@ async function getFile(slug) {
     url: `${link}`,
     responseType: 'stream',
     onDownloadProgress: function (progressEvent) {
-      console.log(`Download progress ${(progressEvent.progress*100).toFixed(2)}%`);
+      console.log(`Downloading ${slug}: ${(progressEvent.progress*100).toFixed(2)}%`);
     }
   })
   .then(function(response) {
@@ -83,7 +84,8 @@ async function cleanup(file) {
   console.log('Cleaning up...')
   fs.unlink(file, () => {
     console.log('Cleanup successful.');
-    console.log('Build complete. Thanks for using Themegen!');
+    finished = true;
+    // console.log('Build complete. Thanks for using Themegen!');
   })
   return;
 }
@@ -101,6 +103,6 @@ async function cleanup(file) {
 // downloadPlugin(slug);
 
 // exports.axiosRequest = downloadPlugin;
-export {downloadPlugin};
+export {downloadPlugin, finished};
 // module.exports = {downloadPlugin};'extraction complete'
 // exports.downloadPlugin = downloadPlugin;
