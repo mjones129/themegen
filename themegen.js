@@ -6,7 +6,7 @@ import {promises as fs} from 'fs';
 // import prompt from 'prompt-sync';
 import promptSync from 'prompt-sync'; const prompt = promptSync();
 // const https = require('https');
-import {downloadPlugin} from './axiosRequest.js';
+import {downloadPlugin, finished} from './axiosRequest.js';
 
 
 //set some defaults
@@ -21,7 +21,7 @@ const blocksIndex = './templates/index.html';
 const blocksIndexData = '';
 const classicIndex = './index.php';
 const classicIndexData = '';
-let slug = '';
+let slugs = [];
 // let slug = axiosRequest.slug;
 
 
@@ -74,6 +74,7 @@ if (versionCheck == "y") {
 }
 
 const ecomm = prompt("Install WooCommerce? (y/n) ");
+const wtf = prompt("Install What The File? (y/n) ");
 
 
 //remove spaces from theme name to create text domain
@@ -107,12 +108,16 @@ await fs.writeFile('style.css', stylesheetData, (err) => {
 });
 
 if (ecomm === 'y') {
-    // slug = 'woocommerce';
-    // console.log(`The slug has been updated to ${slug}`);
-    downloadPlugin('woocommerce')
+    slugs.push('woocommerce');
 }
 if (ecomm === 'n') {
     console.log('WooCommerce not downloaded.');
 }
+if (wtf === 'y') {
+    slugs.push('what-the-file');
+}
 
+for (let i = 0; slugs[i]; i++) {
+    await downloadPlugin(slugs[i]);
+}
 // export default slug;
