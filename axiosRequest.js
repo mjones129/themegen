@@ -1,23 +1,25 @@
 import axios from 'axios';
 import {promises as fsPromises} from 'fs';
 import fs from 'fs';
-import unzipper from 'unzipper';
-import slug from './themegen.js';
+// import unzipper from 'unzipper';
+import extract from 'extract-zip';
+// import slug from './themegen.js';
+import path from 'path';
 
 //define some global variables
 let link = '';
 let file = '';
-let outputDirectory = '../../plugins/';
+let outputDirectory = path.resolve('../../plugins/');
 
 //request the download link for the latest version of the wordpress plugin, based on the slug
-async function getDownloadLink(slug) {
+async function downloadPlugin(slug) {
   
   await axios.get(`https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug=${slug}`)
   .then(function (response) {
     //save the server response to a global variable nd return it
     link = response.data.download_link;
     console.log(`Download link: ${link}`);
-    getFile();
+    getFile(slug);
   })
   .catch(function (error) { //catch any errors
     console.log(error);
@@ -27,7 +29,7 @@ async function getDownloadLink(slug) {
 }
 
 //make a GET request to whatever download link line 15 returns
-async function getFile() {
+async function getFile(slug) {
   await axios({
     method: 'get',
     url: `${link}`,
@@ -53,23 +55,31 @@ async function getFile() {
 
 
 //unzip the file into the directory that Wordpress is expecting
+// async function decompressFile(file) {
+//   console.log('Extracting...');
+//   fs.createReadStream(file)
+//   .pipe(unzipper.Extract({ path: outputDirectory })).on('close', function(err) {
+//     if (err) throw err;
+//     console.log('Extraction complete.');
+//   })
+//     return;
+// }
+
 async function decompressFile(file) {
   console.log('Extracting...');
-  fs.mkdir(`${outputDirectory}/${slug}/`, (err) => {
-    //once the file is finished downloading, extract it to the plugins directory
-    if (err) throw err;
-      fs.createReadStream(file)
-      .pipe(unzipper.Extract({ path: outputDirectory })).on('close', function(err) {
-        if (err) throw err;
-        console.log('Extraction complete.');
-        cleanup();
-      })
-    })
-    return;
+  try {
+    await extract(file, { dir: outputDirectory })
+    console.log('Extraction complete')
+  } catch (err) {
+    // handle any errors
+    console.log(err);
+  }
+  await cleanup(file);
+  return;
 }
-
- //delete the old zip after extraction completes
- async function cleanup() {
+ 
+//delete the old zip after extraction completes
+async function cleanup(file) {
   console.log('Cleaning up...')
   fs.unlink(file, () => {
     console.log('Cleanup successful.');
@@ -77,21 +87,20 @@ async function decompressFile(file) {
   })
   return;
 }
- 
 
 //combine all that into a single function
-async function downloadPlugin(slug) {
-  await getDownloadLink(slug);
-  // await getFile(link);
-  // await decompressFile(file);
-  // await cleanup();
-}
+// async function downloadPlugin(slug) {
+//   await getDownloadLink(slug);
+//   // await getFile(link);
+//   // await decompressFile(file);
+//   // await cleanup();
+// }
 
 
 //do it
-downloadPlugin(slug);
+// downloadPlugin(slug);
 
 // exports.axiosRequest = downloadPlugin;
-// export {downloadPlugin};
+export {downloadPlugin};
 // module.exports = {downloadPlugin};'extraction complete'
 // exports.downloadPlugin = downloadPlugin;
