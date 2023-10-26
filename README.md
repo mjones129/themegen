@@ -14,6 +14,6 @@ ThemeGen is a bare-bones WordPress theme generator that happens entirely in the 
 1. Open a terminal window and navigate to your empty theme folder like so: ```cd wp-content/themes/emptyThemeFolder```.
 2. Clone this repository. ```git clone https://github.com/mjones129/themegen.git .```
 3. Install deps by running ```npm install```.
-4. Execute the ThemeGen file by running ```node themegen.js```.
+4. Execute the ThemeGen file by running ```npm run themegen```.
 5. Follow the prompts.
-6. A new ```style.css``` file will be generated in the root of your theme folder and should now be recognized by WordPress.
+6. A new WordPress theme will be generated in your directory and your selected plugins will be downloaded and installed automagically.
