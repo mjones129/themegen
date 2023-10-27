@@ -84,6 +84,7 @@ if (allOrNothing === 'c') {
     const mwpw = prompt("Install ManageWP Worker? (y/n) ");
     const redir = prompt("Install Redirection? (y/n) ");
     const ssl = prompt("Install Really Simple SSL? (y/n) ");
+    const svgsupport = prompt("Install SVG Support? (y/n) ");
     const wf = prompt("Install Wordfence Security? (y/n) ");
     const wpfc = prompt("Install WP Fastest Cache? (y/n) ");
     const hidelogin = prompt("Install WPS Hide Login? (y/n) ");
@@ -164,10 +165,15 @@ if (allOrNothing === 'c') {
     } else {
         console.log('Yoast Duplicate Post not downloaded.');
     }
+    if (svgsupport === 'y') {
+        slugs.push('svg-support');
+    } else {
+        console.log('SVG Support plugin not downloaded.');
+    }
 }
 
 if (allOrNothing === 'u') {
-    slugs.push('what-the-file', 'better-search-replace', 'ewww-image-optimizer', 'enable-media-replace', 'really-simple-ssl', 'wordfence', 'wp-fastest-cache', 'wps-hide-login', 'wordpress-seo');
+    slugs.push('what-the-file', 'better-search-replace', 'ewww-image-optimizer', 'svg-support', 'enable-media-replace', 'really-simple-ssl', 'wordfence', 'wp-fastest-cache', 'wps-hide-login', 'wordpress-seo');
 }
 
 
