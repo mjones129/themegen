@@ -25,7 +25,11 @@ let slugs = [];
 // let slug = axiosRequest.slug;
 
 
-
+async function makeTemplatesDir() {
+    const dest = './templates';
+    const destCreated = await fs.mkdir(dest, {recursive: true});
+    return destCreated;
+}
 
 
 //begin program
@@ -42,11 +46,10 @@ console.log(
 console.log("Welcome to ThemGen!");
 const themeType = prompt("Is this a Blocks theme or a Classic theme? (b/c): ");
 if (themeType == 'b') {
-    fs.mkdir('./templates/');
-    if(fs.readdir('./templates/') == []){
-        fs.copyFile('./lib/index.html', './templates/index.html');
-    }
-} if (themeType == 'c') {
+    await makeTemplatesDir()
+        .then(fs.copyFile('./lib/index.html', './templates/index.html'));
+}
+if (themeType == 'c') {
     fs.copyFile('./lib/index.php', './index.php');
     }
 fs.copyFile('./lib/screenshot.png', './screenshot.png');
