@@ -26,9 +26,16 @@ let slugs = [];
 
 
 async function makeTemplatesDir() {
-    const dest = './templates';
-    const destCreated = await fs.mkdir(dest, {recursive: true});
-    return destCreated;
+    const templatesDir = './templates';
+    const tempCreated = await fs.mkdir(templatesDir, {recursive: true});
+    return tempCreated;
+
+}
+
+async function makePartsDir() {
+    const partsDir = './parts';
+    const partsCreated = await fs.mkdir(partsDir, {recursive: true});
+    return partsCreated;
 }
 
 
@@ -48,6 +55,9 @@ const themeType = prompt("Is this a Blocks theme or a Classic theme? (b/c): ");
 if (themeType == 'b') {
     await makeTemplatesDir()
         .then(fs.copyFile('./lib/index.html', './templates/index.html'));
+    await makePartsDir()
+        .then(fs.copyFile('./lib/header.html', './parts/header.html'));
+    fs.copyFile('./lib/theme.json', './theme.json');
 }
 if (themeType == 'c') {
     fs.copyFile('./lib/index.php', './index.php');
