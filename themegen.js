@@ -18,6 +18,9 @@ const blocksIndexData = '';
 const classicIndex = './index.php';
 const classicIndexData = '';
 let slugs = [];
+let bgColor = 'white';
+let fontColor = 'black';
+let primaryColor = '#6ab1eb';
 
 
 //begin program
@@ -40,8 +43,6 @@ if (themeType == 'b') {
         const partsDir = await mkdir('./parts');
         await copyFile('./lib/header.html', './parts/header.html');
         await copyFile('./lib/footer.html', './parts/footer.html');
-        console.log(`${partsDir} created.`);
-        console.log(`${tempDir} created.`);
     } catch(err) {
         console.error(err.message);
     }
@@ -73,6 +74,16 @@ if (versionCheck == "y") {
     themeVersion = "0.0.1";
 } if (versionCheck == "n") {
     themeVersion = prompt("Please enter version number: ");
+}
+
+const colors = prompt("Would you like to define custom colors for your theme? (y/n) ");
+if (colors === 'n') {
+    console.log('No custom colors set.');
+}
+if (colors === 'y') {
+    bgColor = prompt("Please enter the hex code of the page background: ");
+    fontColor = prompt("Please enter the hex code of the font color: ");
+    primaryColor = prompt("Please enter the hex code of the header and footer: ");
 }
 
 const allOrNothing = prompt("Plugin time! Install the (u)sual suspects, (c)herry pick what you want, or (n)o plugins at all? (u/c/n) ");
@@ -204,7 +215,27 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: ${textDomain}
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
-*/`
+*/
+
+:root {
+    --themegen-bg: ${bgColor};
+    --themegen-txt: ${fontColor};
+    --themegen-pri: ${primaryColor};
+}
+
+body {
+    background-color: var(--themegen-bg);
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    color: var(--themegen-txt);
+}
+
+header, footer {
+    background-color: var(--themegen-pri);
+}
+
+`
 
 
 await writeFile('style.css', stylesheetData, (err) => {
@@ -217,8 +248,5 @@ await writeFile('style.css', stylesheetData, (err) => {
 if (slugs.length !== 0) {
     for (let i = 0; slugs[i]; i++) {
         await downloadPlugin(slugs[i]);
-        // if (i === (slugs.length -1)) {
-        //     console.log('You have reached the end. Thank you, and goodnight.');
-        // }
     }
 }
