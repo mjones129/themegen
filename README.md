@@ -2,6 +2,7 @@
 
 ThemeGen is a bare-bones WordPress theme generator that happens entirely in the terminal. Simply answer a few questions and generate basic theme files instantly.
 
+
 !['Screenshot'](./lib/screenshot.png)
 
 ## Requirements:
@@ -17,3 +18,9 @@ ThemeGen is a bare-bones WordPress theme generator that happens entirely in the 
 4. Execute the ThemeGen file by running ```npm run themegen```.
 5. Follow the prompts.
 6. A new WordPress theme will be generated in your directory and your selected plugins will be downloaded and installed automagically.
+
+## Video Demonstration
+Below you'll find a quick example of how this generator is designed to work:
+
+
+https://github.com/mjones129/themegen/assets/29353833/313eea76-3265-4f84-9485-e757bccfc5a2
