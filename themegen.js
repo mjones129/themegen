@@ -1,12 +1,8 @@
-//require the essentials
-// import { downloadPlugin } from './axiosRequest.mjs';
+//import the essentials
 import figlet from 'figlet';
-import {promises as fs} from 'fs';
-// import https from 'https';
-// import prompt from 'prompt-sync';
+import {mkdir, copyFile, writeFile} from 'fs/promises';
 import promptSync from 'prompt-sync'; const prompt = promptSync();
-// const https = require('https');
-import {downloadPlugin, finished} from './axiosRequest.js';
+import {downloadPlugin} from './axiosRequest.js';
 
 
 //set some defaults
@@ -22,24 +18,6 @@ const blocksIndexData = '';
 const classicIndex = './index.php';
 const classicIndexData = '';
 let slugs = [];
-// let slug = axiosRequest.slug;
-
-
-async function makeTemplatesDir() {
-    const templatesDir = './templates';
-    const tempCreated = await fs.mkdir(templatesDir, {recursive: true})
-        .then(fs.copyFile('./lib/index.html', './templates/index.html'));
-    return tempCreated;
-
-}
-
-async function makePartsDir() {
-    const partsDir = './parts';
-    const partsCreated = await fs.mkdir(partsDir, {recursive: true})
-        .then(fs.copyFile('./lib/header.html', './parts/header.html'))
-        .then(fs.copyFile('./lib/footer.html', './parts/footer.html'))
-    return partsCreated;
-}
 
 
 //begin program
@@ -56,15 +34,24 @@ console.log(
 console.log("Welcome to ThemGen!");
 const themeType = prompt("Is this a Blocks theme or a Classic theme? (b/c): ");
 if (themeType == 'b') {
-    await makeTemplatesDir();
-    await makePartsDir();
-    fs.copyFile('./lib/theme.json', './theme.json');
+    try {
+        const tempDir = await mkdir('./templates');
+        await copyFile('./lib/index.html', './templates/index.html');
+        const partsDir = await mkdir('./parts');
+        await copyFile('./lib/header.html', './parts/header.html');
+        await copyFile('./lib/footer.html', './parts/footer.html');
+        console.log(`${partsDir} created.`);
+        console.log(`${tempDir} created.`);
+    } catch(err) {
+        console.error(err.message);
+    }
+    copyFile('./lib/theme.json', './theme.json');
 }
 if (themeType == 'c') {
-    fs.copyFile('./lib/index.php', './index.php');
+    copyFile('./lib/index.php', './index.php');
 }
-fs.copyFile('./lib/functions.php', './functions.php');
-fs.copyFile('./lib/screenshot.png', './screenshot.png');
+copyFile('./lib/functions.php', './functions.php');
+copyFile('./lib/screenshot.png', './screenshot.png');
 const themeName = prompt("What's the name of your theme? ");
 console.log("That's an awesome name. Good thinking!");
 const authorName = prompt("What's the author's name? ");
@@ -88,7 +75,7 @@ if (versionCheck == "y") {
     themeVersion = prompt("Please enter version number: ");
 }
 
-const allOrNothing = prompt("Plugin time! Install the usual suspects, or cherry pick what you want? (u/c) ");
+const allOrNothing = prompt("Plugin time! Install the (u)sual suspects, (c)herry pick what you want, or (n)o plugins at all? (u/c/n) ");
 
 if (allOrNothing === 'c') {
     const ecomm = prompt("Install WooCommerce? (y/n) ");
@@ -191,6 +178,9 @@ if (allOrNothing === 'u') {
     slugs.push('what-the-file', 'better-search-replace', 'ewww-image-optimizer', 'svg-support', 'enable-media-replace', 'really-simple-ssl', 'wordfence', 'wp-fastest-cache', 'wps-hide-login', 'wordpress-seo');
 }
 
+if (allOrNothing === 'n') {
+    console.log('Setup complete. Thanks for using ThemeGen!');
+}
 
 //remove spaces from theme name to create text domain
 const textDomainCondensed = themeName.split(" ").join("");
@@ -217,16 +207,18 @@ Use it to make something cool, have fun, and share what you've learned with othe
 */`
 
 
-await fs.writeFile('style.css', stylesheetData, (err) => {
+await writeFile('style.css', stylesheetData, (err) => {
     if(err) throw err;
     console.log(`Stylesheet generated!`);
 });
 
 
 
-if (slugs) {
+if (slugs.length !== 0) {
     for (let i = 0; slugs[i]; i++) {
         await downloadPlugin(slugs[i]);
+        // if (i === (slugs.length -1)) {
+        //     console.log('You have reached the end. Thank you, and goodnight.');
+        // }
     }
 }
-// export default slug;
