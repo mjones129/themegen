@@ -27,14 +27,17 @@ let slugs = [];
 
 async function makeTemplatesDir() {
     const templatesDir = './templates';
-    const tempCreated = await fs.mkdir(templatesDir, {recursive: true});
+    const tempCreated = await fs.mkdir(templatesDir, {recursive: true})
+        .then(fs.copyFile('./lib/index.html', './templates/index.html'));
     return tempCreated;
 
 }
 
 async function makePartsDir() {
     const partsDir = './parts';
-    const partsCreated = await fs.mkdir(partsDir, {recursive: true});
+    const partsCreated = await fs.mkdir(partsDir, {recursive: true})
+        .then(fs.copyFile('./lib/header.html', './parts/header.html'))
+        .then(fs.copyFile('./lib/footer.html', './parts/footer.html'))
     return partsCreated;
 }
 
@@ -53,15 +56,14 @@ console.log(
 console.log("Welcome to ThemGen!");
 const themeType = prompt("Is this a Blocks theme or a Classic theme? (b/c): ");
 if (themeType == 'b') {
-    await makeTemplatesDir()
-        .then(fs.copyFile('./lib/index.html', './templates/index.html'));
-    await makePartsDir()
-        .then(fs.copyFile('./lib/header.html', './parts/header.html'));
+    await makeTemplatesDir();
+    await makePartsDir();
     fs.copyFile('./lib/theme.json', './theme.json');
 }
 if (themeType == 'c') {
     fs.copyFile('./lib/index.php', './index.php');
-    }
+}
+fs.copyFile('./lib/functions.php', './functions.php');
 fs.copyFile('./lib/screenshot.png', './screenshot.png');
 const themeName = prompt("What's the name of your theme? ");
 console.log("That's an awesome name. Good thinking!");
