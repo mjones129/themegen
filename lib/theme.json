@@ -1,6 +1,19 @@
 {
+    "$schema": "https://schemas.wp.org/trunk/theme.json",
     "version": 2,
     "settings": {
-        "appearanceTools": true
+        "appearanceTools": true,
+        "color": {
+            "palette": [
+                {
+                    "slug": "themegen-bg",
+                    "color": "white",
+                    "name": "Background Color"
+                }
+            ]
+        }
+    },
+    "styles": {
+
     }
 }
