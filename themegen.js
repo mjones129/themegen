@@ -50,6 +50,9 @@ if (themeType == 'b') {
 }
 if (themeType == 'c') {
     copyFile('./lib/index.php', './index.php');
+    copyFile('./lib/header.php', './header.php');
+    copyFile('./lib/footer.php', './footer.php');
+    copyFile('./lib/front-page.php', './front-page.php')
 }
 copyFile('./lib/functions.php', './functions.php');
 copyFile('./lib/screenshot.png', './screenshot.png');
