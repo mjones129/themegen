@@ -42,6 +42,8 @@ get_header(); ?>
   </div>
 </div>
 
+<?php include get_template_directory() . '/includes/cta.php'; ?>
+
 <div class="container">
     <?php get_footer(); ?>
 </div>
