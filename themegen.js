@@ -49,10 +49,16 @@ if (themeType == 'b') {
     copyFile('./lib/theme.json', './theme.json');
 }
 if (themeType == 'c') {
-    copyFile('./lib/index.php', './index.php');
-    copyFile('./lib/header.php', './header.php');
-    copyFile('./lib/footer.php', './footer.php');
-    copyFile('./lib/front-page.php', './front-page.php')
+    try {
+        const includesDir = await mkdir('./includes');
+        await copyFile('./lib/cta.php', './includes/cta.php');
+        await copyFile('./lib/index.php', './index.php');
+        await copyFile('./lib/header.php', './header.php');
+        await copyFile('./lib/footer.php', './footer.php');
+        await copyFile('./lib/front-page.php', './front-page.php')
+    } catch(err) {
+        console.error(err.message);
+    }
 }
 copyFile('./lib/functions.php', './functions.php');
 copyFile('./lib/screenshot.png', './screenshot.png');
