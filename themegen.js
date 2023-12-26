@@ -52,16 +52,17 @@ if (themeType == 'c') {
     try {
         const includesDir = await mkdir('./includes');
         await copyFile('./lib/cta.php', './includes/cta.php');
+        await copyFile('./lib/hero.php', './includes/hero.php');
     } catch(err) {
         console.error(err.message);
     }
-    copyFile('./lib/index.php', './index.php');
     copyFile('./lib/header.php', './header.php');
     copyFile('./lib/footer.php', './footer.php');
     copyFile('./lib/front-page.php', './front-page.php');
+    copyFile('./lib/functions.php', './functions.php');
+    copyFile('./lib/screenshot.png', './screenshot.png');
+    copyFile('./lib/index.php', './index.php');
 }
-copyFile('./lib/functions.php', './functions.php');
-copyFile('./lib/screenshot.png', './screenshot.png');
 const themeName = prompt("What's the name of your theme? ");
 console.log("That's an awesome name. Good thinking!");
 const authorName = prompt("What's the author's name? ");
