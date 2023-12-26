@@ -1,9 +1,6 @@
 import axios from 'axios';
-import {promises as fsPromises} from 'fs';
 import fs from 'fs';
-// import unzipper from 'unzipper';
 import extract from 'extract-zip';
-// import slug from './themegen.js';
 import path from 'path';
 
 //define some global variables
@@ -51,21 +48,8 @@ async function getFile(slug) {
   })
   return file;
 }
-  
-
-
 
 //unzip the file into the directory that Wordpress is expecting
-// async function decompressFile(file) {
-//   console.log('Extracting...');
-//   fs.createReadStream(file)
-//   .pipe(unzipper.Extract({ path: outputDirectory })).on('close', function(err) {
-//     if (err) throw err;
-//     console.log('Extraction complete.');
-//   })
-//     return;
-// }
-
 async function decompressFile(file) {
   console.log('Extracting...');
   try {
@@ -90,19 +74,5 @@ async function cleanup(file) {
   return;
 }
 
-//combine all that into a single function
-// async function downloadPlugin(slug) {
-//   await getDownloadLink(slug);
-//   // await getFile(link);
-//   // await decompressFile(file);
-//   // await cleanup();
-// }
-
-
-//do it
-// downloadPlugin(slug);
-
-// exports.axiosRequest = downloadPlugin;
+// export download function
 export {downloadPlugin, finished};
-// module.exports = {downloadPlugin};'extraction complete'
-// exports.downloadPlugin = downloadPlugin;
