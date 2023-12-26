@@ -44,7 +44,7 @@ get_header(); ?>
   </div>
 </div>
 
-<?php include get_template_directory() . '/includes/cta.php'; ?>
+<?php include get_template_directory() . '/includes/accordion.php'; ?>
 
 <div class="container">
     <?php get_footer(); ?>
