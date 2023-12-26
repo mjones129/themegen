@@ -2,6 +2,8 @@
 // wp_head();
 get_header(); ?>
 
+<?php include get_template_directory() . '/includes/hero.php'; ?>
+
 <div class="container">
     <?php the_content(); ?>
 </div>
