@@ -5,7 +5,7 @@
   "description": "Minimalistic WordPress theme generator",
   "main": "themegen.js",
   "scripts": {
-    "cleanupTheme": "npm uninstall figlet fs-extra prompt-sync axios",
+    "cleanupTheme": "npm uninstall axios extract-zip figlet prompt-sync",
     "cleanupPlugins": "node cleanup.js",
     "themegen": "node themegen.js"
   },
@@ -15,7 +15,6 @@
     "axios": "^1.5.1",
     "extract-zip": "^2.0.1",
     "figlet": "^1.6.0",
-    "prompt-sync": "^4.2.0",
-    "unzipper": "^0.10.14"
+    "prompt-sync": "^4.2.0"
   }
 }
