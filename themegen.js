@@ -53,6 +53,7 @@ if (themeType == 'c') {
         const includesDir = await mkdir('./includes');
         await copyFile('./lib/accordion.php', './includes/accordion.php');
         await copyFile('./lib/hero.php', './includes/hero.php');
+        await copyFile('./lib/cards.php', './includes/cards.php');
     } catch(err) {
         console.error(err.message);
     }
