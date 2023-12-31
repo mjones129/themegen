@@ -13,10 +13,6 @@ const options = {
   mode: 0o755,
   flag: "",
 };
-const blocksIndex = "./templates/index.html";
-const blocksIndexData = "";
-const classicIndex = "./index.php";
-const classicIndexData = "";
 let slugs = [];
 let bgColor = "white";
 let fontColor = "black";
@@ -45,6 +41,7 @@ if (themeType == "b") {
   } catch (err) {
     console.error(err.message);
   }
+  copyFile("./lib/functions.php", "./functions.php");
   copyFile("./lib/theme.json", "./theme.json");
   copyFile("./lib/screenshot.png", "./screenshot.png");
 }
