@@ -35,6 +35,7 @@ if (themeType == "b") {
   try {
     const tempDir = await mkdir("./templates");
     await copyFile("./lib/index.html", "./templates/index.html");
+    await copyFile("./lib/front-page.html", "./templates/front-page.html");
     const partsDir = await mkdir("./parts");
     await copyFile("./lib/header.html", "./parts/header.html");
     await copyFile("./lib/footer.html", "./parts/footer.html");
