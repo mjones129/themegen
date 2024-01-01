@@ -6,8 +6,8 @@
   "main": "themegen.js",
   "scripts": {
     "cleanupTheme": "npm uninstall axios extract-zip figlet prompt-sync",
-    "cleanupPlugins": "node cleanup.js",
-    "themegen": "node themegen.js"
+    "themegen": "node themegen.js",
+    "clearblocks": "rm -rf templates/ parts/ functions.php theme.json style.css screenshot.png"
   },
   "author": "Matt Jones",
   "license": "ISC",
