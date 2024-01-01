@@ -33,7 +33,7 @@
     Bootstrap your next WordPress theme just by answering a few questions.
     <br />
     <br />
-    <br />    
+    <br />
     <a href="https://github.com/mjones129/themegen/issues">Report Bug</a>
     ·
     <a href="https://github.com/mjones129/themegen/issues">Request Feature</a>
@@ -109,8 +109,8 @@ As mentioned above, this is a WordPress plugin that will depend on a few other t
 
 ### Installation
 
-1. Open a terminal window and navigate to your empty theme folder like so: ```cd wp-content/themes/emptyThemeFolder```.
-2. Clone this repository. ```git clone https://github.com/mjones129/themegen.git .```
+1. Open a terminal window and navigate to the wordpress theme folder like so: ```cd wp-content/themes/```.
+2. Clone this repository. ```git clone https://github.com/mjones129/themegen.git && cd themegen```.
 3. Install deps by running ```npm install```.
 4. Execute the ThemeGen file by running ```npm run themegen```.
 5. Follow the prompts.
