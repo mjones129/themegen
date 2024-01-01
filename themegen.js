@@ -41,7 +41,7 @@ if (themeType == "b") {
   } catch (err) {
     console.error(err.message);
   }
-  copyFile("./lib/functions.php", "./functions.php");
+  copyFile("./lib/functions-blocks.php", "./functions.php");
   copyFile("./lib/theme.json", "./theme.json");
   copyFile("./lib/screenshot.png", "./screenshot.png");
 }
