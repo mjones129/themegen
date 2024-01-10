@@ -119,7 +119,6 @@ if (allOrNothing === "c") {
   const wpfc = prompt("Install WP Fastest Cache? (y/n) ");
   const hidelogin = prompt("Install WPS Hide Login? (y/n) ");
   const yoast = prompt("Install Yoast SEO? (y/n) ");
-  const ydp = prompt("Install Yoast Duplicate Post? (y/n) ");
 
   if (ecomm === "y") {
     slugs.push("woocommerce");
@@ -190,11 +189,6 @@ if (allOrNothing === "c") {
     console.log("Redirection not downloaded.");
   }
 
-  if (ydp === "y") {
-    slugs.push("duplicate-post");
-  } else {
-    console.log("Yoast Duplicate Post not downloaded.");
-  }
   if (svgsupport === "y") {
     slugs.push("svg-support");
   } else {
