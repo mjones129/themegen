@@ -9,7 +9,7 @@ get_header(); ?>
 </div>
 
 <!-- 3 cards in a container -->
-<?php get_template_directory() . '/includes/cards.php'; ?>
+<?php include get_template_directory() . '/includes/cards.php'; ?>
 
 <?php include get_template_directory() . '/includes/accordion.php'; ?>
 
