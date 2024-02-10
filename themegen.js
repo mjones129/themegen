@@ -8,11 +8,6 @@ import { downloadPlugin } from "./axiosRequest.js";
 //set some defaults
 let themeTags = "";
 let themeVersion = "0.0.1";
-const options = {
-  encoding: "utf8",
-  mode: 0o755,
-  flag: "",
-};
 let slugs = [];
 let bgColor = "white";
 let fontColor = "black";
@@ -80,10 +75,10 @@ if (themeTagCheck == "y") {
   themeTags = prompt("Please enter your theme tags: ");
 }
 
-const versionCheck = prompt("I assume this is version 0.0.1? (y/n) ");
+const versionCheck = prompt("I assume this is version 1.0.0? (y/n) ");
 
 if (versionCheck == "y") {
-  themeVersion = "0.0.1";
+  themeVersion = "1.0.0";
 }
 if (versionCheck == "n") {
   themeVersion = prompt("Please enter version number: ");
