@@ -123,7 +123,9 @@ As mentioned above, this is a WordPress plugin that will depend on a few other t
 ## How It Works
 
 
-6. A new WordPress theme will be generated in your directory and your selected plugins will be downloaded and installed automagically.
+A new WordPress theme will be generated in your directory and your selected plugins will be downloaded and installed automagically.
+
+Made a mistake? Want to quickly delete all your files and run a create a new theme with different options? Simply run ```npm clearblocks```. This will delete all the files that were created when generating a Blocks theme. There is currently no ```clearclassic``` option.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
